@@ -1,0 +1,53 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "プロジェクト構造の初期化",
+      "description": "index.html, style.css, main.jsを作成し、基本的なCanvasのセットアップを行う。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "基本描画ループとプレイヤーの実装",
+      "description": "RequestAnimationFrameを使用したループと、キーボード入力によるプレイヤー（徒歩）の移動を実装する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 3,
+      "title": "ワールドマップとカメラの実装",
+      "description": "背景タイル（道路・草地）の描画と、プレイヤーを追従するカメラシステムを実装する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 4,
+      "title": "車両システムの基本実装",
+      "description": "車両のオブジェクトを作成し、加速・旋回・摩擦などの基本物理を実装する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 5,
+      "title": "乗車・降車アクションの実装",
+      "description": "プレイヤーが車両の近くで特定のキーを押した際に乗り降りできる機能を実装する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 6,
+      "title": "衝突判定の実装",
+      "description": "プレイヤー・車両と建物（障害物）との衝突判定を実装する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 7,
+      "title": "UIとビジュアルの強化",
+      "description": "ミニマップ、ヘルスバー、およびAI生成した高品質なテクスチャの適用を行う。",
+      "status": "done",
+      "completed": true
+    }
+  ]
+}
