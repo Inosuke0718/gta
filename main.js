@@ -373,19 +373,40 @@ class Game {
         const size = 180;
         const padding = 20;
         const scale = size / this.worldSize;
+        const radius = size / 2;
         
         this.ctx.save();
-        this.ctx.translate(padding, padding);
+        this.ctx.translate(padding + radius, padding + radius);
         
+        // Clip to circle
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        this.ctx.clip();
+
         // Background
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        this.ctx.strokeStyle = '#fff';
-        this.ctx.lineWidth = 2;
-        this.ctx.fillRect(0, 0, size, size);
-        this.ctx.strokeRect(0, 0, size, size);
+        this.ctx.fillStyle = 'rgba(10, 20, 10, 0.8)'; // Dark green tint
+        this.ctx.fillRect(-radius, -radius, size, size);
+        
+        // Grid on minimap
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        this.ctx.lineWidth = 1;
+        for (let i = -radius; i < radius; i += 20) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(i, -radius);
+            this.ctx.lineTo(i, radius);
+            this.ctx.stroke();
+            this.ctx.beginPath();
+            this.ctx.moveTo(-radius, i);
+            this.ctx.lineTo(radius, i);
+            this.ctx.stroke();
+        }
+
+        // Relative transform to center player on minimap (optional, but keep it fixed for now as per world scale)
+        // Let's keep it fixed but draw from -radius, -radius
+        this.ctx.translate(-radius, -radius);
 
         // Buildings on minimap
-        this.ctx.fillStyle = '#666';
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
         this.buildings.forEach(b => {
             this.ctx.fillRect(b.x * scale, b.y * scale, b.width * scale, b.height * scale);
         });
@@ -397,11 +418,46 @@ class Game {
         });
 
         // Player on minimap
-        this.ctx.fillStyle = this.player.color;
+        this.ctx.fillStyle = '#fff';
+        this.ctx.shadowBlur = 10;
+        this.ctx.shadowColor = '#fff';
         this.ctx.beginPath();
-        this.ctx.arc(this.player.x * scale, this.player.y * scale, 3, 0, Math.PI * 2);
+        this.ctx.arc(this.player.x * scale, this.player.y * scale, 4, 0, Math.PI * 2);
         this.ctx.fill();
+        this.ctx.shadowBlur = 0;
+
+        // Radar Scan Line (Animation)
+        const scanAngle = (Date.now() / 1000) % (Math.PI * 2);
+        this.ctx.save();
+        this.ctx.translate(this.player.x * scale, this.player.y * scale);
+        this.ctx.rotate(scanAngle);
+        const grad = this.ctx.createLinearGradient(0, 0, radius, 0);
+        grad.addColorStop(0, 'rgba(46, 204, 113, 0.5)');
+        grad.addColorStop(1, 'rgba(46, 204, 113, 0)');
+        this.ctx.fillStyle = grad;
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0);
+        this.ctx.arc(0, 0, radius, 0, Math.PI / 4);
+        this.ctx.closePath();
+        this.ctx.fill();
+        this.ctx.restore();
+
+        this.ctx.restore();
+
+        // Minimap Border
+        this.ctx.save();
+        this.ctx.translate(padding + radius, padding + radius);
+        this.ctx.strokeStyle = '#fff';
+        this.ctx.lineWidth = 3;
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        this.ctx.stroke();
         
+        // External compass markers
+        this.ctx.fillStyle = '#fff';
+        this.ctx.font = 'bold 10px Outfit';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('N', 0, -radius - 5);
         this.ctx.restore();
     }
 

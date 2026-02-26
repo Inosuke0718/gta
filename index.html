@@ -18,15 +18,28 @@
   </head>
   <body>
     <div id="game-container">
+      <div class="scanlines"></div>
       <canvas id="gameCanvas"></canvas>
       <div id="hud">
-        <div id="health-container">
-          <div id="health-bar"></div>
+        <div id="stats-container">
+          <div id="money-display">$1,234,567</div>
+          <div id="health-container">
+            <div id="health-bar"></div>
+          </div>
+          <div id="location-display">Liberty City</div>
+          <div id="wanted-stars">
+            <span>★</span><span>★</span><span>☆</span><span>☆</span
+            ><span>☆</span>
+          </div>
         </div>
-        <div id="location-display">Liberty City</div>
-        <div id="wanted-stars">
-          <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        <div id="weapon-box">
+          <div id="weapon-icon">🔫</div>
+          <div id="ammo-count">12 / 120</div>
         </div>
+      </div>
+      <div id="control-guide">
+        <div class="guide-item"><span class="key">WASD</span> Move</div>
+        <div class="guide-item"><span class="key">F</span> Enter / Exit</div>
       </div>
       <div id="loading-overlay">
         <h1 class="glitch" data-text="WEB GTA">WEB GTA</h1>

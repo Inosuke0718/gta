@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "プロジェクト構造の初期化",
-      "description": "index.html, style.css, main.jsを作成し、基本的なCanvasのセットアップを行う。",
+      "description": "index.html, style.css, main.jsを作成し、基本的なCanvas ofセットアップを行う。",
       "status": "done",
       "completed": true
     },
@@ -46,6 +46,27 @@
       "id": 7,
       "title": "UIとビジュアルの強化",
       "description": "ミニマップ、ヘルスバー、およびAI生成した高品質なテクスチャの適用を行う。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 8,
+      "title": "HUDの再設計と品質向上",
+      "description": "Glassmorphismを適用し、ヘルスバー、指名手配度、所持金表示をよりプレミアムなデザインに更新する。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 9,
+      "title": "ミニマップと画面エフェクトの強化",
+      "description": "ミニマップに走査線エフェクトを追加し、画面全体にビネットやノイズオーバーレイを適用して没入感を高める。",
+      "status": "done",
+      "completed": true
+    },
+    {
+      "id": 10,
+      "title": "武器選択と操作ガイドUIの実装",
+      "description": "武器アイコンと、プレイヤーをサポートするキーボード操作ガイドのUIをコーナーに追加する。",
       "status": "done",
       "completed": true
     }

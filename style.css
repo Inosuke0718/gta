@@ -34,6 +34,28 @@ body {
   overflow: hidden;
 }
 
+#game-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 6;
+}
+
 canvas {
   display: block;
   image-rendering: pixelated;
@@ -43,48 +65,151 @@ canvas {
 /* HUD (Heads-Up Display) */
 #hud {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 250px;
-  padding: 15px;
-  background: var(--hud-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  top: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
   z-index: 10;
+}
+
+#stats-container {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+  width: 280px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#money-display {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #2ecc71;
+  text-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+  letter-spacing: -0.5px;
+  text-align: right;
+  margin-bottom: 5px;
 }
 
 #health-container {
   width: 100%;
-  height: 10px;
+  height: 8px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-  margin-bottom: 10px;
+  border-radius: 10px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 #health-bar {
-  width: 100%;
+  width: 85%;
   height: 100%;
-  background: linear-gradient(90deg, var(--health-color), #27ae60);
-  box-shadow: 0 0 10px var(--health-color);
+  background: linear-gradient(90deg, #e74c3c, #f1c40f, #2ecc71);
+  background-size: 200% 100%;
+  animation: healthGradient 5s linear infinite;
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+}
+
+@keyframes healthGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 #location-display {
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-  color: var(--primary-color);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 5px;
 }
 
 #wanted-stars {
   display: flex;
-  gap: 5px;
-  color: rgba(255, 255, 255, 0.2);
-  font-size: 1.2rem;
+  justify-content: flex-end;
+  gap: 8px;
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  text-shadow: 0 0 10px var(--primary-color);
+}
+
+#wanted-stars span {
+  animation: starPulse 2s ease-in-out infinite;
+}
+
+#wanted-stars span:nth-child(2) { animation-delay: 0.2s; }
+#wanted-stars span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes starPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; filter: brightness(1.5); }
+}
+
+#weapon-box {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+#weapon-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+#ammo-count {
+  font-family: 'Cascadia Code', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1px;
+}
+
+/* Control Guide */
+#control-guide {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.guide-item {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.key {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--primary-color);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Loading Overlay */
